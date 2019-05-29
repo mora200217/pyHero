@@ -12,7 +12,7 @@ import sys, os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 
 from Nota import Nota
-from Selector import Selector
+# from Selector import Selector
 
 from pygame.locals import *
 
