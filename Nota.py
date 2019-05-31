@@ -20,12 +20,20 @@ class Nota(pygame.sprite.Sprite):
        """
        pygame.sprite.Sprite.__init__(self)
        # Definicion de Variables
+       self.height = 70
+       self.ratio = 45 / 70
+       self.factor = 1.1
        self.pos = [pos_inicio,INICIAL_VERTICAL] # Posicion inicial 
-       self.vel = 0.1 # Pixeles por frame 
-       self.image =  pygame.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) # Importar imagen 
-       self.rect = self.image.get_rect()
+       self.vel = 0.6 # Pixeles por frame 
+       self.fuente_imagen = pygame.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) # Importar imagen 
+       self.dimensions = (int(self.height),int(self.ratio * self.height))
+       self.image = pygame.transform.scale(self.fuente_imagen, self.dimensions)
+
+
 
     def show(self, screen): 
+        
+        self.image =  pygame.transform.scale(self.fuente_imagen,[int(x * self.factor) for x in self.dimensions])
         screen.blit(self.image, (self.pos[0], self.pos[1]))
 
     def move(self): 

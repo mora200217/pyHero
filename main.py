@@ -18,13 +18,16 @@ from pygame.locals import *
 
 # Algunas Constantes 
 SIZE = width, height = 700,500 
-COLOR = (0, 240 ,240)
+COLOR = (44, 62, 80)
 RED = (255,0,0)
 POSX = 201
+SEPARACION_NOTAS = 100
+TIEMPO_APARICION = 200
 notas = []
 # NOTA = import 
 count = 0
 
+poner_divisores = False
 
 
 
@@ -41,10 +44,19 @@ def main():
     background.fill(COLOR)
 
     def lanzar_nota(): 
-        id = random.randint(0,3)
-        POS_INICIO = [100, 200, 300, 400] 
-        return Nota(id, POS_INICIO[id])
-        
+        id_nota = random.randint(0,3)
+        fixed = (width / 2) - (2 * SEPARACION_NOTAS)
+        return Nota(id_nota, fixed + SEPARACION_NOTAS * id_nota)
+
+    
+    
+    def crear_divisor():
+        pg.draw.line(screen, (0, 0, 0), [0,height * 0.9], [width, height * 0.9])
+
+    # Divisor de Prueba
+    def divisor_vertical(): 
+        pg.draw.line(screen, (0, 0, 0), [width / 2,0], [width / 2, height])
+
     # Blit everything to the screen
     screen.blit(background, (0, 0))
     pg.display.flip()
@@ -59,16 +71,21 @@ def main():
                 return
 
         screen.blit(background, (0,0))
+        
         if notas:
             for nota in notas:
                 if show_selector:
                     nota.show(screen)
                     nota.move()
 
+    # Divisores --------------------
+        if poner_divisores:
+            crear_divisor() # Divisor de traste
+            divisor_vertical() # Divisor de prueba 
          # show_selector = False if pg.key.get_pressed()[pg.K_SPACE] else pass  
         if pg.key.get_pressed()[pg.K_SPACE]:
             notas.append(lanzar_nota())
-        if count % 1500 == 0: 
+        if count % TIEMPO_APARICION == 0: 
             notas.append(lanzar_nota())
         
         count += 1
