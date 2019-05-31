@@ -24,7 +24,7 @@ class Nota(pygame.sprite.Sprite):
        self.ratio = 45 / 70
        self.factor = 1.1
        self.pos = [pos_inicio,INICIAL_VERTICAL] # Posicion inicial 
-       self.vel = 0.6 # Pixeles por frame 
+       self.vel = 0.6 # Pixeles por frame
        self.fuente_imagen = pygame.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) # Importar imagen 
        self.dimensions = (int(self.height),int(self.ratio * self.height))
        self.image = pygame.transform.scale(self.fuente_imagen, self.dimensions)

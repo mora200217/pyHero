@@ -55,7 +55,6 @@ def main():
     def crear_divisor():
         pg.draw.line(screen, (0, 0, 0), [0,height * 0.9], [width, height * 0.9])
 
-    # Divisor de Prueba
     def divisor_vertical(): 
         pg.draw.line(screen, (0, 0, 0), [width / 2,0], [width / 2, height])
 
@@ -94,8 +93,8 @@ def main():
 
     # Divisores --------------------
         if poner_divisores:
-            crear_divisor() # Divisor de traste
-            divisor_vertical() # Divisor de prueba 
+            crear_divisor() 
+            divisor_vertical() 
          # show_selector = False if pg.key.get_pressed()[pg.K_SPACE] else pass  
         if pg.key.get_pressed()[pg.K_SPACE]:
             notas.append(lanzar_nota())
