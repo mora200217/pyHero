@@ -8,7 +8,8 @@
 
 import pygame as pg 
 import sys, os, random
-
+import time
+from pygame.locals import *
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 
 from Nota import Nota
@@ -25,7 +26,7 @@ notas = []
 # NOTA = import 
 count = 0
 
-
+reloj = pg.time.Clock()
 
 
 def main():
@@ -52,11 +53,23 @@ def main():
     # Preconfiguracion del ciclo 
     POSX = 20
     show_selector = True
-
+    pg.mixer.pre_init()
+    pg.mixer.music.load("Pastor Lopez - El hijo ausente.mp3")
+    pg.mixer.music.play(1)
     while True:
+       
+        
         for event in pg.event.get():
-            if event.type == QUIT:
+            if event.type == pg.QUIT:
                 return
+            if event.type == pg.KEYDOWN:
+            #evalua si la tecla presionada es la p de pausar
+                if event.key == pg.K_p:
+                #pausa la musica
+                    pg.mixer.music.pause()
+                if event.key == pg.K_u:
+                #despausa la musica
+                    pg.mixer.music.pause()
 
         screen.blit(background, (0,0))
         if notas:
@@ -76,6 +89,8 @@ def main():
           
         
         pg.display.flip()
+    reloj.tick(500)
+    pg.display.update()
 
     
 
