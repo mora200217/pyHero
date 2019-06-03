@@ -28,6 +28,8 @@ notas = []
 # NOTA = import 
 count = 0
 
+ROOT = 'assets/music/'
+
 poner_divisores = False
 
 reloj = pg.time.Clock()
@@ -57,6 +59,10 @@ def main():
 
     def divisor_vertical(): 
         pg.draw.line(screen, (0, 0, 0), [width / 2,0], [width / 2, height])
+
+    def get_music(cancion = 0): 
+        return str(random.randint(1,15)) if cancion == 0 else str(cancion)
+
     #def eliminacion_notas():
 
     # Blit everything to the screen
@@ -68,7 +74,7 @@ def main():
     
     show_selector = True
     pg.mixer.pre_init()
-    pg.mixer.music.load(str(random.randint(1,15))+".mp3")
+    pg.mixer.music.load(ROOT + get_music()+".mp3")
     pg.mixer.music.play(1)
     while True:
        
