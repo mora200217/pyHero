@@ -81,7 +81,7 @@ def main():
                     pg.mixer.music.pause()
                 if event.key == pg.K_u:
                 #despausa la musica
-                    pg.mixer.music.pause()
+                    pg.mixer.music.unpause()
 
         screen.blit(background, (0,0))
         
