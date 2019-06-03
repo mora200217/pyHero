@@ -57,6 +57,7 @@ def main():
 
     def divisor_vertical(): 
         pg.draw.line(screen, (0, 0, 0), [width / 2,0], [width / 2, height])
+    #def eliminacion_notas():
 
     # Blit everything to the screen
     screen.blit(background, (0, 0))
@@ -64,13 +65,14 @@ def main():
 
     # Preconfiguracion del ciclo 
     POSX = 20
+    
     show_selector = True
     pg.mixer.pre_init()
-    pg.mixer.music.load("Pastor Lopez - El hijo ausente.mp3")
+    pg.mixer.music.load(str(random.randint(1,15))+".mp3")
     pg.mixer.music.play(1)
     while True:
        
-        
+        54
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
@@ -98,7 +100,7 @@ def main():
          # show_selector = False if pg.key.get_pressed()[pg.K_SPACE] else pass  
         if pg.key.get_pressed()[pg.K_SPACE]:
             notas.append(lanzar_nota())
-        if count % TIEMPO_APARICION == 0: 
+        elif count % TIEMPO_APARICION == 0: 
             notas.append(lanzar_nota())
         
         count += 1

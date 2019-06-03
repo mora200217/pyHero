@@ -39,6 +39,7 @@ class Nota(pygame.sprite.Sprite):
     def move(self): 
         self.pos[1] += self.vel
 
-    def destroy(self): 
+    def destroy(self):
+     
         pass
 
