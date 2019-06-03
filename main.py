@@ -13,6 +13,7 @@ from pygame.locals import *
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 
 from Nota import Nota
+from Selector import Selector
 # from Selector import Selector
 
 from pygame.locals import *
@@ -25,6 +26,7 @@ POSX = 201
 SEPARACION_NOTAS = 100
 TIEMPO_APARICION = 200
 notas = []
+selectores = []
 # NOTA = import 
 count = 0
 
@@ -50,8 +52,13 @@ def main():
         fixed = (width / 2) - (2 * SEPARACION_NOTAS)
         return Nota(id_nota, fixed + SEPARACION_NOTAS * id_nota)
 
-    
-    
+    def mostrar_traste():
+        traste = pg.image.load("assets/notas/traste.png")
+        traste_width  = 700
+        traste_height = 750
+        screen.blit(pg.transform.scale(traste, (traste_width , traste_height)), [(width - traste_width) * 0.5, height / 2 - 500]) # Posicion del traste / ONG
+        
+
     def crear_divisor():
         pg.draw.line(screen, (0, 0, 0), [0,height * 0.9], [width, height * 0.9])
 
@@ -68,6 +75,12 @@ def main():
     pg.mixer.pre_init()
     pg.mixer.music.load("Pastor Lopez - El hijo ausente.mp3")
     pg.mixer.music.play(1)
+    pg.mixer.music.pause()
+
+    div = 100
+    # Crear selectores -----------
+    for selector in range(0, 4):
+        selectores.append(Selector(selector))
     while True:
        
         
@@ -84,8 +97,12 @@ def main():
                     pg.mixer.music.unpause()
 
         screen.blit(background, (0,0))
+        mostrar_traste()
         
-        if notas:
+        for selector in selectores:
+            selector.show(screen)
+
+        if notas: # && selectores:
             for nota in notas:
                 if show_selector:
                     nota.show(screen)
