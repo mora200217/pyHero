@@ -107,7 +107,12 @@ def main():
         screen.blit(background, (0,0))
         mostrar_traste()
         
+        
         for selector in selectores:
+            pos_temp = selector.get_pos()[0]
+            abs_pos = abs(width / 2 - pos_temp) / (width/2 - pos_temp)
+            pos_temp = abs(width/2 - pos_temp)/2 * (abs_pos) + selector.get_pos()[0]
+            pg.draw.line(screen, (255,255,255), selector.get_pos(), (pos_temp, height / 2 - 56), 20)
             selector.show(screen)
 
         if notas: # && selectores:

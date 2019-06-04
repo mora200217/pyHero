@@ -16,3 +16,6 @@ class Selector(pg.sprite.Sprite):
     def show(self, screen): 
         self.passive = pg.transform.scale(self.passive, [80,50])
         screen.blit(self.passive, (self.pos[0], self.pos[1]))
+
+    def get_pos(self, offset = 0):
+        return [self.pos[0] + 40, self.pos[1] + 25]
