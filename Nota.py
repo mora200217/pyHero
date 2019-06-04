@@ -1,11 +1,11 @@
 import pygame 
 import sys, os 
-
+import random
 #from pygame import math.Vector2 as Vector2
 
 COLORES = ['amarilla','roja','verde', 'azul']
-
-INICIAL_VERTICAL = 100 
+type_ = [pygame.K_a, pygame.K_s, pygame.K_j, pygame.K_k]
+INICIAL_VERTICAL = 180 
 
 # TODO: Convertir el objeto a un sprite de pygame 
 
@@ -21,10 +21,11 @@ class Nota(pygame.sprite.Sprite):
        pygame.sprite.Sprite.__init__(self)
        # Definicion de Variables
        self.height = 70
+       self.type = color 
        self.ratio = 45 / 70
        self.factor = 1.1
        self.pos = [pos_inicio,INICIAL_VERTICAL] # Posicion inicial 
-       self.vel = 0.6 # Pixeles por frame
+       self.vel = random.randint(10,15) / 10 # Pixeles por frame
        self.fuente_imagen = pygame.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) # Importar imagen 
        self.dimensions = (int(self.height),int(self.ratio * self.height))
        self.image = pygame.transform.scale(self.fuente_imagen, self.dimensions)
@@ -39,7 +40,9 @@ class Nota(pygame.sprite.Sprite):
     def move(self): 
         self.pos[1] += self.vel
 
+    def get_type(self):
+        return type_[self.type]
     def destroy(self):
-     
-        pass
+        print('DESTROY BB BRRRRRR')
+        del self
 

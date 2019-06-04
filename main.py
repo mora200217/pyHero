@@ -24,7 +24,7 @@ COLOR = (44, 62, 80)
 RED = (255,0,0)
 POSX = 201
 SEPARACION_NOTAS = 100
-TIEMPO_APARICION = 200
+TIEMPO_APARICION = 100
 notas = []
 selectores = []
 # NOTA = import 
@@ -38,6 +38,7 @@ reloj = pg.time.Clock()
 
 
 def main():
+    puntaje=0
     print('Init Game...')
     count = 0
     pg.init()
@@ -88,7 +89,7 @@ def main():
     div = 100
     # Crear selectores -----------
     for selector in range(0, 4):
-        selectores.append(Selector(selector))
+        selectores.append(Selector(selector, width, height))
     while True:
        
         54
@@ -120,15 +121,21 @@ def main():
                 if show_selector:
                     nota.show(screen)
                     nota.move()
+                if nota.pos[1] >= selectores[0].pos[1] + 20: 
+                   notas.remove(nota)
+                   print(puntaje)
+                   puntaje=puntaje-1
+                if abs(nota.pos[1] - selectores[nota.type].pos[1]) <= 10 and pg.key.get_pressed()[nota.get_type()] and pg.key.get_pressed()[K_SPACE]: 
+                   notas.remove(nota)
+                
 
     # Divisores --------------------
         if poner_divisores:
             crear_divisor() 
             divisor_vertical() 
          # show_selector = False if pg.key.get_pressed()[pg.K_SPACE] else pass  
-        if pg.key.get_pressed()[pg.K_SPACE]:
-            notas.append(lanzar_nota())
-        elif count % TIEMPO_APARICION == 0: 
+        
+        if count % TIEMPO_APARICION == 0: 
             notas.append(lanzar_nota())
         
         count += 1
