@@ -1,15 +1,15 @@
 
-import pygame 
+import pygame as pg
 import sys, os 
 import random
 
 COLORES = ['amarilla','roja','verde', 'azul'] # Lista de colores
-type_ = [pygame.K_a, pygame.K_s, pygame.K_j, pygame.K_k] #  Identificadores de teclas tipo pygame
-INICIAL_VERTICAL = 180 
+type_ = [pg.K_a, pg.K_s, pg.K_j, pg.K_k] #  Identificadores de teclas tipo pg
+INICIAL_VERTICAL = 180 # Posición 
 
-# TODO: Convertir el objeto a un sprite de pygame 
+# TODO: Convertir el objeto a un sprite de pg 
 
-class Nota(pygame.sprite.Sprite):
+class Nota(pg.sprite.Sprite):
     '''
         CLASE_ Nota. Encargada de generar las notas del juego.
     '''
@@ -21,7 +21,7 @@ class Nota(pygame.sprite.Sprite):
         2 -> verde
         3 -> azul
        """
-       pygame.sprite.Sprite.__init__(self)
+       pg.sprite.Sprite.__init__(self)
        # Definicion de Variables
        self.height = 70 
        self.type = color # El identificador de color se guarda como tipo de nota, para mejorar lectura  
@@ -29,18 +29,18 @@ class Nota(pygame.sprite.Sprite):
        self.factor = 1.1 # Factor de escala de transformación. 
        self.pos = [pos_inicio,INICIAL_VERTICAL]
        self.vel = random.randint(10,15) / 10 # Pixeles por frame
-       self.fuente_imagen = pygame.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) 
+       self.fuente_imagen = pg.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) 
        self.dimensions = (int(self.height),int(self.ratio * self.height)) 
-       self.image = pygame.transform.scale(self.fuente_imagen, self.dimensions)
+       self.image = pg.transform.scale(self.fuente_imagen, self.dimensions)
 
 
 
     def show(self, screen): 
         '''
         Muestra la nota dentro de la superficies dada
-        screen: Superficie (Pygame)
+        screen: Superficie (pg)
         '''
-        self.image =  pygame.transform.scale(self.fuente_imagen,[int(x * self.factor) for x in self.dimensions])
+        self.image =  pg.transform.scale(self.fuente_imagen,[int(x * self.factor) for x in self.dimensions])
         screen.blit(self.image, (self.pos[0], self.pos[1]))
 
     def move(self): 
