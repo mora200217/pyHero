@@ -6,10 +6,9 @@ COLORES = ['amarillo','rojo','verde', 'azul']
 
 
 class Selector(pg.sprite.Sprite):
-    def __init__(self, color, width, height): 
-        div  = 107
+    def __init__(self, color, width, height, division): 
         self.color = color
-        self.pos = [(145 + div *  color), height - 70]
+        self.pos = [(145 + division *  color), height - 70]
         self.passive = pg.image.load('assets/selectores/selector-' + COLORES[color]+ '.png')
     
     def show(self, screen): 
