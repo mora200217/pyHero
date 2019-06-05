@@ -118,7 +118,7 @@ def main():
                     nota.move()
                 if nota.pos[1] >= selectores[0].pos[1] + 50: 
                    notas.remove(nota)
-                   print(puntaje)
+                   # print(puntaje)
                    puntaje=puntaje-1
                 if abs(nota.pos[1] - selectores[nota.type].pos[1]) <= 10 and pg.key.get_pressed()[nota.get_type()] and pg.key.get_pressed()[K_SPACE]: 
                    notas.remove(nota)        

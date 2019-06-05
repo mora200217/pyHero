@@ -2,11 +2,13 @@
 import pygame as pg
 import sys, os 
 import random
+
 from pygame.math import Vector2 as Vector
 
 COLORES = ['amarilla','roja','verde', 'azul'] # Lista de colores
 type_ = [pg.K_a, pg.K_s, pg.K_j, pg.K_k] #  Identificadores de teclas tipo pg
 INICIAL_VERTICAL = 180 # Posición 
+PORCENTAJE_SOSTENIDA = 20 # Porcentaje de aparicion de una tecla sostenida 
 
 # TODO: Convertir el objeto a un sprite de pg 
 
@@ -33,11 +35,16 @@ class Nota():
        
        self.temp_f = Vector((145 + division *  color), height - 70)
        self.temp_i = Vector(pos_inicio, INICIAL_VERTICAL)
-       
+       self.sostenida = True if random.randint(0,100) <= PORCENTAJE_SOSTENIDA else False 
+       self.tiempo_sostenida = random.randint(40,80) if self.sostenida else None
        self.vel  =(self.temp_f - self.temp_i).normalize()
        self.fuente_imagen = pg.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) 
        self.dimensions = (int(self.height),int(self.ratio * self.height)) 
        self.image = pg.transform.scale(self.fuente_imagen, self.dimensions)
+
+
+       if self.sostenida: 
+           print('Sostenida por %d' % self.tiempo_sostenida)
 
 
 
