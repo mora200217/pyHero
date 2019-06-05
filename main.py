@@ -20,6 +20,7 @@ RED = (255,0,0)
 POSX = 201
 SEPARACION_NOTAS = 100
 TIEMPO_APARICION = 100
+DIVISION_SELECTORES = 110
 ROOT = 'assets/music/'
 
 notas = []
@@ -47,8 +48,8 @@ def main():
         Crear una nota 
         '''
         id_nota = random.randint(0,3)
-        fixed = (width / 2) - (2.5 * SEPARACION_NOTAS)
-        return Nota(id_nota, fixed + SEPARACION_NOTAS * id_nota, width, height)
+        fixed = (width / 2) - (DIVISION_SELECTORES * 1.15)
+        return Nota(id_nota, fixed + DIVISION_SELECTORES / 2* id_nota, width, height, DIVISION_SELECTORES)
 
     def mostrar_traste():
         '''
@@ -84,7 +85,7 @@ def main():
     div = 100
     # Crear selectores -----------
     for selector in range(0, 4):
-        selectores.append(Selector(selector, width, height))
+        selectores.append(Selector(selector, width, height, DIVISION_SELECTORES))
     while True:
        
         54
