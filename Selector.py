@@ -7,7 +7,6 @@ COLORES = ['amarillo','rojo','verde', 'azul']
 
 class Selector(pg.sprite.Sprite):
     def __init__(self, color, width, height): 
-        print('New Selector')
         div  = 107
         self.color = color
         self.pos = [(145 + div *  color), height - 70]

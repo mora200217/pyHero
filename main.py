@@ -47,8 +47,8 @@ def main():
         Crear una nota 
         '''
         id_nota = random.randint(0,3)
-        fixed = (width / 2) - (2 * SEPARACION_NOTAS)
-        return Nota(id_nota, fixed + SEPARACION_NOTAS * id_nota)
+        fixed = (width / 2) - (2.5 * SEPARACION_NOTAS)
+        return Nota(id_nota, fixed + SEPARACION_NOTAS * id_nota, width, height)
 
     def mostrar_traste():
         '''
@@ -115,7 +115,7 @@ def main():
                 if show_selector:
                     nota.show(screen)
                     nota.move()
-                if nota.pos[1] >= selectores[0].pos[1] + 20: 
+                if nota.pos[1] >= selectores[0].pos[1] + 50: 
                    notas.remove(nota)
                    print(puntaje)
                    puntaje=puntaje-1
