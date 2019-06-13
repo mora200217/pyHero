@@ -8,12 +8,20 @@
 import pygame as pg 
 import sys, os, random
 import time
-
+import ctypes
 from Nota import Nota
 from Selector import Selector
+from Punto import Punto
 from pygame.locals import *
 pg.init()
+#para saber el tama;o de la pantalla del pc qque lo este usando
+user32 = ctypes.windll.user32
+user32.SetProcessDPIAware()
+ancho, alto = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 # Algunas Constantes 
+user32 = ctypes.windll.user32
+user32.SetProcessDPIAware()
+ancho, alto = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 SIZE = width, height = 700,500 
 COLOR = (44, 62, 80)
 RED = (255,0,0)
@@ -33,10 +41,11 @@ count = 0
 reloj = pg.time.Clock()
 
 def main():
-    puntaje=0
+    puntaje = Punto()
+    #define la fuente del marcador
     fuente=pg.font.Font(None,30)
-    
-    marcador=fuente.render(str(puntaje),0,(255,255,255))
+    #renderiza la fuente
+    marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255))
     count = 0
     pg.init()
 
@@ -123,20 +132,25 @@ def main():
                     nota.move()
                 if nota.pos[1] >= selectores[0].pos[1] + 50: 
                    notas.remove(nota)
-                   marcador=fuente.render(str(puntaje),0,(255,255,255))
-                   puntaje=puntaje-10
-                   #screen.blit(marcador,(100,100))
+                   marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255))
+                   puntaje.cambiar_puntuacion(-10)
+                  
+
                 if abs(nota.pos[1] - selectores[nota.type].pos[1]) <= 10 and pg.key.get_pressed()[nota.get_type()] and pg.key.get_pressed()[K_SPACE]: 
                    notas.remove(nota)
-                   puntaje=(puntaje+10-0.5*abs(nota.pos[1] - selectores[nota.type].pos[1]))//1
-                   marcador=fuente.render(str(puntaje),0,(255,255,255)) 
-                   #screen.blit(marcador,(100,100))
+                   puntaje.cambiar_puntuacion((puntaje.puntuacion_actual()+10-0.5*abs(nota.pos[1] - selectores[nota.type].pos[1]))//1)
+                   #se define el marcador para que lo renderize y se pueda imprimir como un valor
+                   marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255)) 
+              #imprime el mensaje de la pantalla     
                 screen.blit(marcador,(100,100))    
-        if count % TIEMPO_APARICION == 0: 
+        if count % TIEMPO_APARICION == 0:
+            #LANZA LAS NOTAS con el objeto definido en notas.py 
             notas.append(lanzar_nota())
         count += 1
         pg.display.flip()
+    #nos da como los fps del juego
     reloj.tick(500)
+    #HACE UN UPDATE A LA PANTALLA
     pg.display.update()
 
 if '__main__' == __name__: main()
