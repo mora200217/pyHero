@@ -34,8 +34,9 @@ reloj = pg.time.Clock()
 
 def main():
     puntaje=0
+    #define la fuente del marcador
     fuente=pg.font.Font(None,30)
-    
+    #renderiza la fuente
     marcador=fuente.render(str(puntaje),0,(255,255,255))
     count = 0
     pg.init()
@@ -125,18 +126,22 @@ def main():
                    notas.remove(nota)
                    marcador=fuente.render(str(puntaje),0,(255,255,255))
                    puntaje=puntaje-10
-                   #screen.blit(marcador,(100,100))
+                  
                 if abs(nota.pos[1] - selectores[nota.type].pos[1]) <= 10 and pg.key.get_pressed()[nota.get_type()] and pg.key.get_pressed()[K_SPACE]: 
                    notas.remove(nota)
                    puntaje=(puntaje+10-0.5*abs(nota.pos[1] - selectores[nota.type].pos[1]))//1
+                   #se define el marcador para que lo renderize y se pueda imprimir como un valor
                    marcador=fuente.render(str(puntaje),0,(255,255,255)) 
-                   #screen.blit(marcador,(100,100))
+              #imprime el mensaje de la pantalla     
                 screen.blit(marcador,(100,100))    
-        if count % TIEMPO_APARICION == 0: 
+        if count % TIEMPO_APARICION == 0:
+            #LANZA LAS NOTAS con el objeto definido en notas.py 
             notas.append(lanzar_nota())
         count += 1
         pg.display.flip()
+    #nos da como los fps del juego
     reloj.tick(500)
+    #HACE UN UPDATE A LA PANTALLA
     pg.display.update()
 
 if '__main__' == __name__: main()
