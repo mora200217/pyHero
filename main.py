@@ -12,7 +12,7 @@ import time
 from Nota import Nota
 from Selector import Selector
 from pygame.locals import *
-
+pg.init()
 # Algunas Constantes 
 SIZE = width, height = 700,500 
 COLOR = (44, 62, 80)
@@ -21,6 +21,8 @@ POSX = 201
 SEPARACION_NOTAS = 100
 TIEMPO_APARICION = 100
 DIVISION_SELECTORES = 110
+
+
 ROOT = 'assets/music/'
 
 notas = []
@@ -32,6 +34,9 @@ reloj = pg.time.Clock()
 
 def main():
     puntaje=0
+    fuente=pg.font.Font(None,30)
+    
+    marcador=fuente.render(str(puntaje),0,(255,255,255))
     count = 0
     pg.init()
 
@@ -80,7 +85,7 @@ def main():
     pg.mixer.pre_init()
     pg.mixer.music.load(ROOT + get_music()+".mp3")
     pg.mixer.music.play(1)
-    pg.mixer.music.pause()
+    #pg.mixer.music.pause()
 
     div = 100
     # Crear selectores -----------
@@ -118,10 +123,15 @@ def main():
                     nota.move()
                 if nota.pos[1] >= selectores[0].pos[1] + 50: 
                    notas.remove(nota)
-                   # print(puntaje)
-                   puntaje=puntaje-1
+                   marcador=fuente.render(str(puntaje),0,(255,255,255))
+                   puntaje=puntaje-10
+                   #screen.blit(marcador,(100,100))
                 if abs(nota.pos[1] - selectores[nota.type].pos[1]) <= 10 and pg.key.get_pressed()[nota.get_type()] and pg.key.get_pressed()[K_SPACE]: 
-                   notas.remove(nota)        
+                   notas.remove(nota)
+                   puntaje=(puntaje+10-0.5*abs(nota.pos[1] - selectores[nota.type].pos[1]))//1
+                   marcador=fuente.render(str(puntaje),0,(255,255,255)) 
+                   #screen.blit(marcador,(100,100))
+                screen.blit(marcador,(100,100))    
         if count % TIEMPO_APARICION == 0: 
             notas.append(lanzar_nota())
         count += 1
