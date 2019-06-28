@@ -14,14 +14,7 @@ from Selector import Selector
 from Punto import Punto
 from pygame.locals import *
 pg.init()
-#para saber el tama;o de la pantalla del pc qque lo este usando
-user32 = ctypes.windll.user32
-user32.SetProcessDPIAware()
-ancho, alto = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-# Algunas Constantes 
-user32 = ctypes.windll.user32
-user32.SetProcessDPIAware()
-ancho, alto = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+
 SIZE = width, height = 700,500 
 COLOR = (44, 62, 80)
 RED = (255,0,0)
@@ -76,8 +69,8 @@ def main():
         
     def get_music(cancion = 0): 
         '''
-        Devolver la ruta de una canción aleatoria. 
-        Canción 0 como por defecto
+        Devolver la ruta de una cancion aleatoria. 
+        Cancion 0 como por defecto
         '''
         return str(random.randint(1,15)) if cancion == 0 else str(cancion)
 
