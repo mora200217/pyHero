@@ -246,4 +246,4 @@ def ciclodeljuego():#esto representa el comienzo del juego
         pygame.display.update()                        
 #-------------------------------------------------------------------
 #main
-primsipal()
+if '__main__' == __name__: primsipal()
