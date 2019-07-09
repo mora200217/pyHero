@@ -41,6 +41,7 @@ count = 0
 reloj = pg.time.Clock()
 
 def main():
+    fondo = pg.display.set_mode((200, 200), HWSURFACE | DOUBLEBUF | RESIZABLE)
     puntaje = Punto()
     #define la fuente del marcador
     fuente=pg.font.Font(None,30)
@@ -49,13 +50,22 @@ def main():
     count = 0
     pg.init()
 
+    ROOT_2 = '/assets/images/'
     screen = pg.display.set_mode(SIZE)
+    pic = pg.image.load(os.getcwd() + ROOT_2 + 'juego_fondo.png')
+    #pygame.image.load("sin.png")
+    pg.display.update()
+    k  = 0.9
+    pic = pg.transform.scale(pic, (width,height))
+    screen.blit(pg.transform.scale(pic, (int(width /k), int(height/k))), (0, 0))
+    pg.display.flip()
     pg.display.set_caption('pyHero - Demo')
     
 
     background = pg.Surface(screen.get_size())
     background = background.convert()
-    background.fill(COLOR)
+    
+    background.blit(pic,[0,0])
 
     def lanzar_nota(): 
         '''
