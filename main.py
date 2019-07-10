@@ -42,6 +42,7 @@ reloj = pg.time.Clock()
 
 def main():
     fondo = pg.display.set_mode((200, 200), HWSURFACE | DOUBLEBUF | RESIZABLE)
+
     puntaje = Punto()
     #define la fuente del marcador
     fuente=pg.font.Font(None,30)
