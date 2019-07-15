@@ -1,5 +1,12 @@
 import pygame,sys
+
+import guitar
+import os 
+
+from main import main 
 from pygame.locals import *
+
+
 
 #variables globales
 colorf=(0,0,0)
@@ -35,10 +42,11 @@ posicionbrg=[pxbrg,pybrg]
 #objetos
 #se inicicaliza
 pygame.init()
+ROOT_TEMP = '/assets/images/'
 ventana=pygame.display.set_mode((anchopantalla,altopantalla))
 pygame.display.set_caption("Chaparro Hero")
-fondo=pygame.image.load("fondo.jpg").convert_alpha()
-fondo_creditos=pygame.image.load("fondo_creditos.jpg").convert_alpha()
+fondo=pygame.image.load(os.getcwd() + ROOT_TEMP + "fondo.jpg").convert_alpha()
+fondo_creditos=pygame.image.load(os.getcwd() + ROOT_TEMP + "fondo_creditos.jpg").convert_alpha()
 '''sonido aplausos en main al seleccioanr a jugar'''
 '''Fuentes'''
 fuentetitulo=pygame.font.SysFont("Nightmare_Hero_Normal",75)
@@ -48,6 +56,14 @@ fuentecreditos=pygame.font.SysFont("comicsansms",20,True)
 #-------------------------------------------------------------------
 
 #funciones
+def conectar_guitarra():
+    mensaje_enviado = False
+    while pygame.joystick.get_count() <= 0:
+        if not(mensaje_enviado):
+            print('Favor conectar guitarra...')
+            mensaje_enviado = True
+        pygame.joystick.quit()
+        pygame.joystick.init()
 
 def escribir(msg,color,posx,posy,fuent):
         mitexto=fuent.render(msg,True,color)
@@ -101,13 +117,13 @@ def boton(Nombre,superficie,posicionesboton,ancho,largo,colorb,colortexto,fuente
 
                         elif dondeesta=="dificultad":
                                 if Nombre=="Facil" and event.type==pygame.MOUSEBUTTONDOWN:
-                                        cansionxdificultad[1]=Nombre
+                                        cansionxdificultad[1]= 1
                                         ciclodeljuego()#aca se debe poner aquello que me lleva al comienzo del juego
                                 if Nombre=="Medio" and event.type==pygame.MOUSEBUTTONDOWN:
-                                        cansionxdificultad[1]=Nombre
+                                        cansionxdificultad[1]= 2
                                         ciclodeljuego()
                                 if Nombre=="Dificil" and event.type==pygame.MOUSEBUTTONDOWN:
-                                        cansionxdificultad[1]=Nombre
+                                        cansionxdificultad[1]=3
                                         ciclodeljuego()   
                                 if Nombre=="Regresar" and event.type==pygame.MOUSEBUTTONDOWN:
                                         canciones()  
@@ -118,17 +134,38 @@ def boton(Nombre,superficie,posicionesboton,ancho,largo,colorb,colortexto,fuente
 
 def primsipal():
     pygame.mixer.music.pause()    
-    pygame.mixer.music.load("musicamp.mp3")
+    pygame.mixer.music.load(os.getcwd() + '/assets/music_UI/' + "musicamp.mp3")
     pygame.mixer.music.play(2,1) 
+    pygame.init()
+    pygame.joystick.init()
+    joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+    try:
+        guitar = joysticks[0]
+        print(guitar.get_name() + '  -  Identificada')
+        guitar.init()
+        cantidad_b = guitar.get_numbuttons()
+        #print('Los botones son: ' + str(cantidad_b) )
+
+    except:
+        print('No hay dispositivos conectados...')
+        mensaje_enviado = False
+        conectar_guitarra()
+    
+     
     intro=True  
     while intro:
+        
+        if 0 == pygame.joystick.get_count():
+            conectar_guitarra()
+
+            
         ventana.fill(colorf)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 pygame.quit()
                 quit()
             if event.type==KEYDOWN:
-                    if event.key==pygame.K_s:
+                    if event.key==pygame.K_q:
                             pygame.quit()
                             intro=False                                                                  
         ventana.blit(fondo,(0,0))
@@ -137,6 +174,7 @@ def primsipal():
         boton("¡A jugar!",ventana,posicionb1,dimensiones[0],dimensiones[1],(0,0,0),(254,254,254),fuenteopciones,"main")
         boton("Creditos",ventana,posicionb2,dimensiones[0],dimensiones[1],(0,0,0),(254,254,254),fuenteopciones,"main")
         pygame.display.update() 
+        
 
 def canciones():
         pygame.mixer.music.pause() 
@@ -152,7 +190,7 @@ def canciones():
                                 pygame.quit()
                                 quit() 
                         if event.type==KEYDOWN:
-                                if event.key==pygame.K_s:
+                                if event.key==pygame.K_q:
                                         pygame.quit()
                                         continuar=False       
                 ventana.blit(fondo,(0,0))
@@ -188,7 +226,7 @@ def dificultad():
                                 pygame.quit()
                                 quit()
                         if event.type==KEYDOWN:
-                                if event.key==pygame.K_s:
+                                if event.key==pygame.K_q:
                                         pygame.quit()
                                         intro=False                                                                  
                 ventana.blit(fondo,(0,0))
@@ -215,7 +253,7 @@ def creditos():
                 pygame.quit()
                 quit()
             if event.type==KEYDOWN:
-                     if event.key==pygame.K_s:
+                     if event.key==pygame.K_q:
                             pygame.quit()
                             continuar=False   
         ventana.blit(fondo_creditos,(0,0))                    
@@ -236,14 +274,16 @@ def ciclodeljuego():#esto representa el comienzo del juego
                 pygame.quit()
                 quit()
             if event.type==KEYDOWN:
-                     if event.key==pygame.K_s:
+                     if event.key==pygame.K_q:
                             pygame.quit()
                             continuar=False   
         ventana.blit(fondo,(0,0))
         escribir("Ciclo del juego",(254,254,254),anchopantalla/2,py,fuentetitulo)
         escribir(str(cansionxdificultad),(254,254,254),anchopantalla/2,py+150,fuenteopciones)
         boton("Regresar",ventana,(pbrx,pbry),dimensiones[0]-30,dimensiones[1],(0,0,0),(254,254,254),fuenteopciones,"ciclodeljuego")
-        pygame.display.update()                        
+        pygame.display.update()
+        main(cansionxdificultad[0],cansionxdificultad[1])
+             
 #-------------------------------------------------------------------
 #main
 if '__main__' == __name__: primsipal()

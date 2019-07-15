@@ -17,7 +17,8 @@ class Nota():
         CLASE_ Nota. Encargada de generar las notas del juego.
     '''
     #da las caracteristicas principales de la nota
-    def __init__(self, color, pos_inicio, width, height, division):
+    def __init__(self, color, pos_inicio, width, height, division, dificultad):
+       
        """
         Claves de Color: 
         0 -> amarillo
@@ -39,7 +40,7 @@ class Nota():
        self.temp_i = Vector(pos_inicio, INICIAL_VERTICAL)
        self.sostenida = True if random.randint(0,100) <= PORCENTAJE_SOSTENIDA else False 
        self.tiempo_sostenida = random.randint(40,80) if self.sostenida else None
-       self.vel  =(self.temp_f - self.temp_i).normalize()
+       self.vel  =(self.temp_f - self.temp_i).normalize() * (1 + dificultad / 3)
        #se cargan los asest desde las carpeta asets para no tener que llamarlos 1 a 1 se definen en forma de una concatenacion
        self.fuente_imagen = pg.image.load(os.path.join('assets/notas', 'nota_' + COLORES[color] + '.png')) 
        #se dan las dimensiones de las notas
