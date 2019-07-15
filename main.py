@@ -16,7 +16,7 @@ from Punto import Punto
 from guitar import get_color, toca
 from pygame.locals import *
 
-from menu import primsipal
+#from menu import primsipal
 
 
 # Algunas Constantes 
