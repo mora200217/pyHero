@@ -16,7 +16,6 @@ from Punto import Punto
 from guitar import get_color, toca
 from pygame.locals import *
 
-#from menu import primsipal
 
 
 # Algunas Constantes 
@@ -90,14 +89,6 @@ def main(numero_cancion,dificulad):
         traste_width  = 700
         traste_height = 750
         screen.blit(pg.transform.scale(traste, (traste_width , traste_height)), [(width - traste_width) * 0.5, height / 2 - 500]) # Posicion del traste / ONG
-        
-    def get_music(cancion = 6): 
-        '''
-        Devolver la ruta de una canción aleatoria. 
-        Canción 0 como por defecto
-        '''
-        return str(random.randint(1,15)) if cancion == 0 else str(cancion)
-
     #def eliminacion_notas():
 
     # Blit everything to the screen
@@ -109,7 +100,7 @@ def main(numero_cancion,dificulad):
     
     show_selector = True
     pg.mixer.pre_init()
-    pg.mixer.music.load(ROOT + str(5) +".mp3")
+    pg.mixer.music.load(ROOT + str(numero_cancion) +".mp3")
     pg.mixer.music.play(1)
     #pg.mixer.music.pause()
 
