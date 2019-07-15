@@ -1,3 +1,4 @@
+
 import pygame,sys
 
 import guitar
@@ -286,4 +287,6 @@ def ciclodeljuego():#esto representa el comienzo del juego
              
 #-------------------------------------------------------------------
 #main
+
 if '__main__' == __name__: primsipal()
+

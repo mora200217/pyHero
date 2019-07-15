@@ -47,7 +47,9 @@ def main(numero_cancion,dificulad):
     guitar = pg.joystick.Joystick(0) # Acceder al primer controlador (Guitarra)
     
     fondo = pg.display.set_mode((200, 200), HWSURFACE | DOUBLEBUF | RESIZABLE)
+
     puntaje = Punto() # Definir el sistema de puntuación como objeto
+
     #define la fuente del marcador
     fuente=pg.font.Font(None,30)
     #renderiza la fuente
