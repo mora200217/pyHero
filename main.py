@@ -50,9 +50,9 @@ def main(numero_cancion,dificulad):
     puntaje = Punto() # Definir el sistema de puntuación como objeto
 
     #define la fuente del marcador
-    fuente=pg.font.Font(None,30)
+    font = pg.font.Font('assets/fonts/sb.ttf', 140)
     #renderiza la fuente
-    marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255))
+    
     count = 0
     pg.init()
 
@@ -72,6 +72,7 @@ def main(numero_cancion,dificulad):
     background = background.convert()
     
     background.blit(pic,[0,0])
+    marcador=font.render(str(puntaje.puntuacion_actual()),0,(44, 62, 80))
 
     def lanzar_nota(): 
         '''
@@ -157,7 +158,12 @@ def main(numero_cancion,dificulad):
         sboard = pg.image.load('assets/images/scoreboard.png')
         sboardDim = [470, 150]
         sboard = pg.transform.scale(sboard, (sboardDim[0],sboardDim[1]))
+        textorect=marcador.get_rect()
+
+        textorect.center=(width / 2 ),(85)
+        
         screen.blit(sboard, (width / 2 - sboardDim[0] / 2,20))
+        screen.blit(marcador,textorect)
         
         for selector in selectores:
             pos_temp = selector.get_pos()[0]
@@ -173,7 +179,7 @@ def main(numero_cancion,dificulad):
                     nota.move()
                 if nota.pos[1] >= selectores[0].pos[1] + 50: 
                    notas.remove(nota)
-                   marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255))
+                   marcador=    font.render(str(puntaje.puntuacion_actual()),100,(44, 62, 80))
                    puntaje.cambiar_puntuacion(-10)
                   
                 tipos = [ 'AZU','VER', 'ROJ', 'AMA']
@@ -187,11 +193,11 @@ def main(numero_cancion,dificulad):
                    notas.remove(nota)
                    puntaje.cambiar_puntuacion(15)
                    #se define el marcador para que lo renderize y se pueda imprimir como un valor
-                   marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255)) 
+                   marcador=        font.render(str(puntaje.puntuacion_actual()),100,(44, 62, 80)) 
                    print('Excelente - ' + str(puntaj))
                    puntaj += 1
               #imprime el mensaje de la pantalla     
-                screen.blit(marcador,(100,100))    
+               
         if count % TIEMPO_APARICION == 0:
             #LANZA LAS NOTAS con el objeto definido en notas.py 
             notas.append(lanzar_nota())
@@ -201,8 +207,8 @@ def main(numero_cancion,dificulad):
     reloj.tick(500)
     #HACE UN UPDATE A LA PANTALLA
     sboard = pg.image.load(os.getcwd() + '/assets/images/' + 'scoreboard' + '.png')
-    screen.blit(sboard, (200,200))
     pg.display.update()
+
 
 if '__main__' == __name__: 
     primsipal()
