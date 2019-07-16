@@ -27,7 +27,7 @@ COLOR = (44, 62, 80)
 RED = (255,0,0)
 POSX = 201
 SEPARACION_NOTAS = 100
-TIEMPO_APARICION = 110
+TIEMPO_APARICION = 50
 DIVISION_SELECTORES = 110
 
 
@@ -100,7 +100,7 @@ def main(numero_cancion,dificulad):
     
     show_selector = True
     pg.mixer.pre_init()
-    pg.mixer.music.load(ROOT + str(numero_cancion) +".mp3")
+    pg.mixer.music.load(ROOT + str(10 + numero_cancion) +".mp3")
     pg.mixer.music.play(1)
     #pg.mixer.music.pause()
 
@@ -112,6 +112,7 @@ def main(numero_cancion,dificulad):
     esta_tocando = False
     puntaj = 0
     while game:
+       
         
         def get_color_type():
             if toca(guitar) and not(esta_tocando):
@@ -153,6 +154,10 @@ def main(numero_cancion,dificulad):
 
         screen.blit(background, (0,0))
         mostrar_traste()
+        sboard = pg.image.load('assets/images/scoreboard.png')
+        sboardDim = [470, 150]
+        sboard = pg.transform.scale(sboard, (sboardDim[0],sboardDim[1]))
+        screen.blit(sboard, (width / 2 - sboardDim[0] / 2,20))
         
         for selector in selectores:
             pos_temp = selector.get_pos()[0]
@@ -180,7 +185,7 @@ def main(numero_cancion,dificulad):
                     type_temp = -1
                 if abs(nota.pos[1] - selectores[nota.type].pos[1]) <= 20 and type_temp == round(nota.type,2): 
                    notas.remove(nota)
-                   puntaje.cambiar_puntuacion(2)
+                   puntaje.cambiar_puntuacion(15)
                    #se define el marcador para que lo renderize y se pueda imprimir como un valor
                    marcador=fuente.render(str(puntaje.puntuacion_actual()),0,(255,255,255)) 
                    print('Excelente - ' + str(puntaj))
@@ -195,6 +200,8 @@ def main(numero_cancion,dificulad):
     #nos da como los fps del juego
     reloj.tick(500)
     #HACE UN UPDATE A LA PANTALLA
+    sboard = pg.image.load(os.getcwd() + '/assets/images/' + 'scoreboard' + '.png')
+    screen.blit(sboard, (200,200))
     pg.display.update()
 
 if '__main__' == __name__: 
